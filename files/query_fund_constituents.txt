@@ -1,0 +1,44 @@
+SELECT 
+cf.FUNDCODE as Fund,
+cf.FUNDNAME as FNAME,
+mr.position_id as PID,
+mr.as_of_date as DATE_P,
+ENTITY_NAME as Name,
+mr.ISSUER_NAME as Issuer_Name,
+mr.rmg_isin as RMG_ISIN,
+mr.rm_pv_pc as RM_PV_PC,
+mr.var_contr_pc_abs as Total,
+mr.MODIFIED_DURATION as Duration,
+mr.DURATION_CONTR as Duration_Contribution,
+mr.YIELD as Yield,
+mr.SECTOR_OVRD as Sector,
+mr.CREDIT_RATING_CAT_OVRD as Credit_Category,
+mr.RATING_MOODYS as Moodys_Rating,
+mr.ISSUER_COUNTRY_OF_DOMICILE as Country_of_Risk,
+mr.IS_CALLABLE as Callable,	
+mr.IS_CONVERTIBLE as Convertible,
+mr.IS_PUTABLE as Putable,
+mr.IS_SUBORDINATED as Subordinate,
+mr.IS_TIER1_COCO as CoCo,
+mr.IS_PERPETUAL as Perpetual,
+mr.IS_DERIVATIVE as Derivative,
+mr.GICS_SECTOR as Sector,
+mr.GICS_INDUSTRY as Industry,
+mr.GICS_INDUSTRY_GROUP as Industry_Group,
+mr.GICS_SUB_INDUSTRY as Sub_Industry,
+cf.MAINSHAREISIN as Fund_ISIN,
+mr.MATURITY_DATE as Maturity_Date,
+
+ASSETCLASSLEVEL1 as LIEN_OVRD
+
+from PRDSDD.RISKSD.TBL_MARKET_RISK mr
+Left Join
+    PRDSDD.RISKSD.VW_CONTROL_FUNDS cf
+    on  cf.FUNDCODE = mr.ENTITY_CODE
+where 
+mr.AS_OF_DATE = 'YYYY-MM-DD' and
+cf.DOMICILE = 'DUB' and
+cf.MAINSHAREISIN IN ('ISIN_FUND')
+
+Group by 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30
+order by 1,7desc,8
